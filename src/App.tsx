@@ -7,6 +7,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonToast,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -33,41 +34,44 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import { TodoProvider } from './contexts/todoContext';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/todo">
-            <Todo />
-          </Route>
-          <Route path="/user">
-            <User />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon aria-hidden="true" icon={home} />
-          </IonTabButton>
-          <IonTabButton tab="todo" href="/todo">
-            <IonIcon aria-hidden="true" icon={list} />
-          </IonTabButton>
-          <IonTabButton tab="user" href="/user">
-            <IonIcon aria-hidden="true" icon={person} />
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
+  <TodoProvider>
+    <IonApp>
+      <IonToast />
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/todo">
+              <Todo />
+            </Route>
+            <Route path="/user">
+              <User />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="home" href="/home">
+              <IonIcon aria-hidden="true" icon={home} />
+            </IonTabButton>
+            <IonTabButton tab="todo" href="/todo">
+              <IonIcon aria-hidden="true" icon={list} />
+            </IonTabButton>
+            <IonTabButton tab="user" href="/user">
+              <IonIcon aria-hidden="true" icon={person} />
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  </TodoProvider>
 );
 
 export default App;
