@@ -34,7 +34,5 @@ export type todoContextType = {
     presentToast: (message: string, color: string) => void;
     deleteItem: (todo: Item) => void;
     alteraStatusItem: (todo: Item) => void;
-    /*
-    update: (todo: Item) => void;
-    */
+    updateItem: (todo: Item) => void;
 }

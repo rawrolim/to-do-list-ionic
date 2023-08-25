@@ -1,7 +1,8 @@
 import { TodoContext } from "../contexts/todoContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { IonBadge, IonContent, IonIcon, IonItem, IonLabel, IonList, IonModal } from "@ionic/react";
 import { chatbubbleOutline, checkmark, createOutline, stop, stopwatchOutline, trash } from "ionicons/icons";
+import { Item } from "../@types/todo";
 
 interface ContainerProps {
 
@@ -11,9 +12,39 @@ const ModalOpcoes: React.FC<ContainerProps> = () => {
 
     const { itemOpcoes, setItemOpcoes,
         openModalOpcoes, setOpenModalOpcoes,
-        itemApontando,
-        deleteItem, alteraStatusItem
+        itemApontando, setItemApontando,
+        deleteItem, alteraStatusItem, updateItem
     } = useContext(TodoContext);
+
+    function selecionarItem(item: Item) {
+        setItemApontando(item);
+        localStorage.setItem("itemApontando", JSON.stringify(item));
+        localStorage.setItem("tempoItemAtual", JSON.stringify({tempo: itemApontando.tempo, deadLine: Date.now()}));
+        setOpenModalOpcoes(false);
+    }
+
+    function pararItem(){
+        setItemApontando(null);
+        localStorage.setItem("itemApontando", JSON.stringify(null));
+        localStorage.setItem("tempoItemAtual", JSON.stringify(null));
+        setOpenModalOpcoes(false);
+    }
+
+    function apontarItem() {
+        if (itemApontando) {
+            const tempoItemAtual = JSON.parse(localStorage.getItem("tempoItemAtual"));
+            itemApontando.tempo = Math.floor((Date.now() - tempoItemAtual.deadLine)/1000);
+            updateItem(itemApontando);
+        }
+    }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            apontarItem()
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [itemApontando]);
 
     return (
         <>
@@ -44,7 +75,7 @@ const ModalOpcoes: React.FC<ContainerProps> = () => {
                         {itemOpcoes && !itemOpcoes.concluido &&
                             <>
                                 {itemApontando && (itemApontando._id === itemOpcoes._id) ?
-                                    <IonItem>
+                                    <IonItem onClick={() => {pararItem()}}>
                                         <IonBadge slot='end' color="primary">
                                             <IonIcon icon={stop} style={{ fontSize: '20px' }} />
                                         </IonBadge>
@@ -53,7 +84,7 @@ const ModalOpcoes: React.FC<ContainerProps> = () => {
                                         </IonLabel>
                                     </IonItem>
                                     :
-                                    <IonItem>
+                                    <IonItem id="apontar" onClick={() => { selecionarItem(itemOpcoes) }}>
                                         <IonBadge slot='end' color="primary">
                                             <IonIcon icon={stopwatchOutline} style={{ fontSize: '20px' }} />
                                         </IonBadge>

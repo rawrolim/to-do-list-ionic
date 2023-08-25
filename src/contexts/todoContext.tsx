@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const TodoProvider: React.FC<Props> = ({ children }) => {
-    const [itemApontando, setItemApontando] = useState<Item>(null);
+    const [itemApontando, setItemApontando] = useState<Item>(JSON.parse(localStorage.getItem("itemApontando")) || null);
     const [itemOpcoes, setItemOpcoes] = useState<Item>(null);
     const [dados, setDados] = useState<Item[]>([]);
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -81,6 +81,13 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
             });
     }
 
+    function updateItem(item: Item){
+        axios.put(ENV.BACKEND_URI + '/' + item._id, item)
+            .then(() => {
+                get();
+            });
+    }
+
 
     function presentToast(message: string, color: string): void {
         present({
@@ -102,7 +109,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
         _id, setId,
         pesquisar, setPesquisar,
         presentToast,
-        get, save, deleteItem, alteraStatusItem
+        get, save, deleteItem, alteraStatusItem, updateItem
     }}>
         {children}
     </TodoContext.Provider>

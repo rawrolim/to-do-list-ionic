@@ -9,12 +9,12 @@ interface ContainerProps {
 }
 
 const Lista: React.FC<ContainerProps> = ({ item }) => {
-    const { itemApontando, setItemOpcoes, setOpenModalOpcoes} = useContext(TodoContext);
+    const { itemApontando, setItemOpcoes, setOpenModalOpcoes } = useContext(TodoContext);
 
     return (
         <>
             <IonList lines={"full"}>
-                <IonItem onClick={()=>{setOpenModalOpcoes(true); setItemOpcoes(item); }}>
+                <IonItem onClick={() => { setOpenModalOpcoes(true); setItemOpcoes(item); }}>
                     <IonLabel className="ion-text-wrap">
                         <div>{item.titulo}</div>
                         <div className="ion-float-end" style={{ display: 'flex' }}>
