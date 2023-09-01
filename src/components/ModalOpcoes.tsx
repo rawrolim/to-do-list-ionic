@@ -9,17 +9,17 @@ interface ContainerProps {
 }
 
 const ModalOpcoes: React.FC<ContainerProps> = () => {
-
     const { itemOpcoes, setItemOpcoes,
         openModalOpcoes, setOpenModalOpcoes,
         itemApontando, setItemApontando,
+        setOpenModal, setId,
         deleteItem, alteraStatusItem, updateItem
     } = useContext(TodoContext);
 
     function selecionarItem(item: Item) {
-        setItemApontando(item);
         localStorage.setItem("itemApontando", JSON.stringify(item));
-        localStorage.setItem("tempoItemAtual", JSON.stringify({tempo: itemApontando.tempo, deadLine: Date.now()}));
+        localStorage.setItem("tempoItemAtual", JSON.stringify({deadLine: Date.now()-(item.tempo*1000)}));
+        setItemApontando(item);
         setOpenModalOpcoes(false);
     }
 
@@ -53,7 +53,7 @@ const ModalOpcoes: React.FC<ContainerProps> = () => {
                     <IonList lines='full'>
 
                         {itemOpcoes && !itemOpcoes.concluido &&
-                            <IonItem>
+                            <IonItem onClick={()=>{setOpenModal(true); setId(itemOpcoes._id)}}>
                                 <IonBadge slot='end' color="primary">
                                     <IonIcon icon={createOutline} style={{ fontSize: '20px' }} />
                                 </IonBadge>

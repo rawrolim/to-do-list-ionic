@@ -46,7 +46,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
                         get();
                     })
                 } else {
-                    axios.put(ENV.BACKEND_URI, {
+                    axios.put(ENV.BACKEND_URI + '/' + _id, {
                         titulo,
                         descricao,
                         _id
@@ -55,6 +55,9 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
                     })
                 }
                 setOpenModal(false);
+                setOpenModalOpcoes(false);
+                setItemOpcoes(null);
+                setId("");
                 setTitulo("");
                 setDescricao("");
                 presentToast("Item salvo com sucesso.", "success");
@@ -87,7 +90,6 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
                 get();
             });
     }
-
 
     function presentToast(message: string, color: string): void {
         present({

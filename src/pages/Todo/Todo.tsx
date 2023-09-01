@@ -9,7 +9,7 @@ import ModalOpcoes from '../../components/ModalOpcoes';
 const Todo: React.FC = () => {
   const [filtroItensConcluidos, setFiltroItensConcluidos] = useState<boolean>(false);
 
-  const {dadosFiltrados, get, pesquisar, setPesquisar } = useContext(TodoContext)
+  const {dadosFiltrados, get, pesquisar, setPesquisar, itemOpcoes } = useContext(TodoContext)
 
   useEffect(() => {
     get();
@@ -45,7 +45,7 @@ const Todo: React.FC = () => {
           return <Lista item={item} key={item._id} />
         })}
 
-        <ModalForularioItem item={null} />
+        <ModalForularioItem item={itemOpcoes} />
 
         <ModalOpcoes />
 

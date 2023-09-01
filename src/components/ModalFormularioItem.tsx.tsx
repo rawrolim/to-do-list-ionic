@@ -1,6 +1,6 @@
 import { Item } from "../@types/todo";
 import { TodoContext } from "../contexts/todoContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonList, IonModal, IonTitle, IonToolbar } from "@ionic/react";
 import { add, close } from "ionicons/icons";
 
@@ -9,6 +9,15 @@ interface ContainerProps {
 }
 
 const ModalForularioItem: React.FC<ContainerProps> = ({ item }) => {
+    useEffect(()=>{
+        if(item){
+            setTitulo(item.titulo);
+            setDescricao(item.descricao);
+        }else{
+            setTitulo('');
+            setDescricao('');
+        }
+    },[item])
 
     const {save, openModal, setOpenModal, setTitulo,titulo, setDescricao, descricao, _id} = useContext(TodoContext);
 

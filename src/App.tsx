@@ -57,6 +57,7 @@ const App: React.FC = () => (
               <Redirect to="/home" />
             </Route>
           </IonRouterOutlet>
+
           <IonTabBar slot="bottom">
             <IonTabButton tab="home" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
