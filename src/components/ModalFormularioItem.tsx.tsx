@@ -1,7 +1,8 @@
 import { Item } from "../@types/todo";
 import { TodoContext } from "../contexts/todoContext";
+import { ProjetoContext } from "../contexts/projetoContext";
 import { useContext, useEffect } from "react";
-import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonList, IonModal, IonTitle, IonToolbar } from "@ionic/react";
+import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonSelect, IonSelectOption, IonTitle, IonToolbar } from "@ionic/react";
 import { add, close } from "ionicons/icons";
 
 interface ContainerProps {
@@ -9,21 +10,25 @@ interface ContainerProps {
 }
 
 const ModalForularioItem: React.FC<ContainerProps> = ({ item }) => {
-    useEffect(()=>{
-        if(item){
+    useEffect(() => {
+        if (item) {
             setTitulo(item.titulo);
             setDescricao(item.descricao);
-        }else{
+            setProjetoId(item.projetoId);
+        } else {
             setTitulo('');
             setDescricao('');
+            setProjetoId('');
         }
-    },[item])
+        get();
+    }, [item])
 
-    const {save, openModal, setOpenModal, setTitulo,titulo, setDescricao, descricao, _id} = useContext(TodoContext);
+    const { setId,setProjetoId,projetoId, save, openModal, setOpenModal, setTitulo, titulo, setDescricao, descricao, _id } = useContext(TodoContext);
+    const { get, dados } = useContext(ProjetoContext);
 
     return (
         <>
-            <IonFab slot={"fixed"} horizontal="end" vertical="bottom" onClick={() => { setOpenModal(true) }}>
+            <IonFab slot={"fixed"} horizontal="end" vertical="bottom" onClick={() => { setOpenModal(true); setId("") }}>
                 <IonFabButton>
                     <IonIcon icon={add} />
                 </IonFabButton>
@@ -34,9 +39,9 @@ const ModalForularioItem: React.FC<ContainerProps> = ({ item }) => {
                     <IonToolbar>
                         <IonTitle>
                             {item ?
-                                "Editar item"
+                                "Editar tarefa"
                                 :
-                                "Criar item"
+                                "Criar tarefa"
                             }
                         </IonTitle>
                         <IonButtons slot="end">
@@ -55,10 +60,18 @@ const ModalForularioItem: React.FC<ContainerProps> = ({ item }) => {
                         <IonItem>
                             <IonInput onIonInput={(e) => setDescricao(String(e.detail.value))} value={descricao} labelPlacement={"floating"} label="Descrição" placeholder="Descrição" />
                         </IonItem>
+
+                        <IonItem>
+                            <IonSelect value={item?.projetoId} aria-label="Projeto" placeholder="Selecione o projeto" interface="action-sheet" onIonChange={e=>setProjetoId(e.target.value)}>
+                                {dados.filter(prj => prj.concluido === false).map(prjCurrent => {
+                                    return <IonSelectOption key={prjCurrent._id} value={prjCurrent._id}>{prjCurrent.nome}</IonSelectOption>
+                                })}
+                            </IonSelect>
+                        </IonItem>
                     </IonList>
 
 
-                    <IonButton expand="full" style={{position: "absolute", width: '100%', bottom:'0'}} onClick={()=>{save(titulo, descricao, _id)}}>
+                    <IonButton expand="full" style={{ position: "absolute", width: '100%', bottom: '0' }} onClick={() => { save(titulo, descricao, _id, projetoId) }}>
                         Salvar
                     </IonButton>
 

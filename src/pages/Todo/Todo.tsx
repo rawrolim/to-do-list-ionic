@@ -5,21 +5,37 @@ import Lista from '../../components/Lista';
 import { TodoContext } from '../../contexts/todoContext';
 import ModalForularioItem from '../../components/ModalFormularioItem.tsx';
 import ModalOpcoes from '../../components/ModalOpcoes';
+import { useParams } from 'react-router';
+import { ProjetoContext } from '../../contexts/projetoContext';
+
+interface ProjetoDetailPageProps {
+  projetoId: string
+}
 
 const Todo: React.FC = () => {
   const [filtroItensConcluidos, setFiltroItensConcluidos] = useState<boolean>(false);
 
-  const {dadosFiltrados, get, pesquisar, setPesquisar, itemOpcoes } = useContext(TodoContext)
+  const params = useParams<ProjetoDetailPageProps>();
 
+  const {dadosFiltrados, get, pesquisar, setPesquisar, itemOpcoes } = useContext(TodoContext)
+  const projetoContextAll = useContext(ProjetoContext)
+  
   useEffect(() => {
     get();
+    projetoContextAll.get();
   }, [])
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Lista</IonTitle>
+          <IonTitle>Lista de tarefas
+            {params.projetoId !== undefined &&
+              <label style={{marginLeft: '5px'}}>
+                projeto {projetoContextAll.dados.find(prj => prj._id === params.projetoId).nome}
+              </label>
+            }  
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -42,7 +58,12 @@ const Todo: React.FC = () => {
 
 
         {dadosFiltrados && dadosFiltrados.filter(i => i.concluido === filtroItensConcluidos).map(item => {
-          return <Lista item={item} key={item._id} />
+          if(params.projetoId !== undefined){
+            if(item.projetoId === params.projetoId)
+              return <Lista item={item} key={item._id} />
+          }else{
+            return <Lista item={item} key={item._id} />
+          }
         })}
 
         <ModalForularioItem item={itemOpcoes} />

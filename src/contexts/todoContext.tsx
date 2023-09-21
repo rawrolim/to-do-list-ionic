@@ -21,6 +21,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
     const [_id, setId] = useState("");
     const [titulo, setTitulo] = useState("");
     const [pesquisar, setPesquisar] = useState("");
+    const [projetoId, setProjetoId] = useState("");
     const [present] = useIonToast();
 
     const dadosFiltrados = dados.filter(item => item.titulo.toLocaleUpperCase().includes(pesquisar.toUpperCase()));
@@ -31,7 +32,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
         setDados(data);
     }
 
-    function save(titulo: string, descricao: string, _id: "") {
+    function save(titulo: string, descricao: string, _id: "", projetoId: '') {
         if (titulo == "") {
             presentToast("Necessário informar o título.", "danger");
         } else {
@@ -41,7 +42,8 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
                 if (_id === "") {
                     axios.post(ENV.BACKEND_URI, {
                         titulo,
-                        descricao
+                        descricao,
+                        projetoId
                     }).then(() => {
                         get();
                     })
@@ -49,7 +51,8 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
                     axios.put(ENV.BACKEND_URI + '/' + _id, {
                         titulo,
                         descricao,
-                        _id
+                        _id,
+                        projetoId
                     }).then(() => {
                         get();
                     })
@@ -111,6 +114,7 @@ export const TodoProvider: React.FC<Props> = ({ children }) => {
         _id, setId,
         pesquisar, setPesquisar,
         presentToast,
+        projetoId, setProjetoId,
         get, save, deleteItem, alteraStatusItem, updateItem
     }}>
         {children}
