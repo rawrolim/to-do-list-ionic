@@ -19,7 +19,7 @@ const Todo: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Lista</IonTitle>
+          <IonTitle>Lista de tarefas</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

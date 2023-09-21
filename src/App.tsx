@@ -11,7 +11,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { list, person, home } from 'ionicons/icons';
+import { list, person, home, clipboard } from 'ionicons/icons';
 import Home from './pages/Home/Home';
 import Todo from './pages/Todo/Todo';
 import User from './pages/User/User';
@@ -35,43 +35,56 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { TodoProvider } from './contexts/todoContext';
+import Projeto from './pages/Projeto/Projeto';
+import { ProjetoProvider } from './contexts/projetoContext';
 setupIonicReact();
 
 const App: React.FC = () => (
   <TodoProvider>
-    <IonApp>
-      <IonToast />
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <Route exact path="/todo">
-              <Todo />
-            </Route>
-            <Route path="/user">
-              <User />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-          </IonRouterOutlet>
+    <ProjetoProvider>
+      <IonApp>
+        <IonToast />
+        <IonReactRouter>
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route exact path="/projeto">
+                <Projeto />
+              </Route>
+              <Route exact path="/todo">
+                <Todo />
+              </Route>
+              <Route exact path="/todo/:projeto_id">
+                <Todo />
+              </Route>
+              <Route path="/user">
+                <User />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+            </IonRouterOutlet>
 
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="home" href="/home">
-              <IonIcon aria-hidden="true" icon={home} />
-            </IonTabButton>
-            <IonTabButton tab="todo" href="/todo">
-              <IonIcon aria-hidden="true" icon={list} />
-            </IonTabButton>
-            <IonTabButton tab="user" href="/user">
-              <IonIcon aria-hidden="true" icon={person} />
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="home" href="/home">
+                <IonIcon aria-hidden="true" icon={home} />
+              </IonTabButton>
+              <IonTabButton tab="projeto" href="/projeto">
+                <IonIcon aria-hidden="true" icon={clipboard} />
+              </IonTabButton>
+              <IonTabButton tab="todo" href="/todo">
+                <IonIcon aria-hidden="true" icon={list} />
+              </IonTabButton>
+              <IonTabButton tab="user" href="/user">
+                <IonIcon aria-hidden="true" icon={person} />
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>
+    </ProjetoProvider>
   </TodoProvider>
 );
 
