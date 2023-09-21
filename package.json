@@ -11,7 +11,8 @@
     "test.unit": "vitest",
     "lint": "eslint",
     "ionic:build:before": "node env-config",
-    "ionic:serve:before": "node env-config"
+    "ionic:serve:before": "node env-config",
+    "build:before": "node env-config"
   },
   "dependencies": {
     "@capacitor/android": "5.2.3",
