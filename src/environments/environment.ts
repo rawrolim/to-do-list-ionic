@@ -1,3 +1,3 @@
 export const ENV = {
-    BACKEND_URI: 'http://localhost:3000/api'
+    BACKEND_URI: 'https://to-do-list-next.vercel.app/api'
 }
