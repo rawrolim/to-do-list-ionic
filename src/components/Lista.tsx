@@ -24,11 +24,14 @@ const Lista: React.FC<ContainerProps> = ({ item }) => {
                     <IonLabel className="ion-text-wrap">
                         <div>{item.titulo}</div>
                         <div className="ion-float-end" style={{ display: 'flex' }}>
-                            <IonBadge color={"medium"} style={{ display: 'flex', marginRight: '5px' }}>
-                                <label style={{textTransform:'capitalize'}} className='ion-align-self-center'>
-                                    {dados.find(dado => dado._id === item.projetoId).nome}
-                                </label>
-                            </IonBadge>
+
+                            {dados.length > 0 &&
+                                <IonBadge color={"medium"} style={{ display: 'flex', marginRight: '5px' }}>
+                                    <label style={{ textTransform: 'capitalize' }} className='ion-align-self-center'>
+                                        {dados.find(dado => dado._id === item.projetoId).nome}
+                                    </label>
+                                </IonBadge>
+                            }
 
                             {itemApontando && (itemApontando._id === item._id) &&
                                 <IonBadge color={"success"} style={{ display: 'flex', marginRight: '5px' }}>
