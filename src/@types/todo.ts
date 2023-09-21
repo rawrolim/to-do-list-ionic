@@ -6,6 +6,7 @@ export interface Item {
     tempo: number;
     titulo: string;
     updatedAt: string;
+    projetoId?: string;
 }
 
 export type todoContextType = {
@@ -22,6 +23,8 @@ export type todoContextType = {
     setDescricao: (descricao: string) => void;
     _id: string;
     setId: (id: string) => void;
+    projetoId: string;
+    setProjetoId: (id: string) => void;
     openModal: boolean;
     setOpenModal: (isOpen: boolean) => void;
     openModalOpcoes: boolean;
@@ -30,7 +33,7 @@ export type todoContextType = {
     setPesquisar: (input: string) => void;
 
     get: () => Promise<void>;
-    save: (titulo:string, descricao: string, _id: string) => void;
+    save: (titulo:string, descricao: string, _id: string, projetoId: string) => void;
     presentToast: (message: string, color: string) => void;
     deleteItem: (todo: Item) => void;
     alteraStatusItem: (todo: Item) => void;

@@ -56,7 +56,7 @@ const App: React.FC = () => (
               <Route exact path="/todo">
                 <Todo />
               </Route>
-              <Route exact path="/todo/:projeto_id">
+              <Route exact path="/todo/:projetoId">
                 <Todo />
               </Route>
               <Route path="/user">

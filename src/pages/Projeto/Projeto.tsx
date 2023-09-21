@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from 'react';
 import ListaProjeto from '../../components/ListaProjeto';
 import { ProjetoContext } from '../../contexts/projetoContext';
 import ModalFormularioProjeto from '../../components/ModalFormularioProjeto';
-import ModalOpcoes from '../../components/ModalOpcoes';
+import ModalOpcoesProjeto from '../../components/ModalOpcoesProjeto';
 
 const Projeto: React.FC = () => {
     const [filtroItensConcluidos, setFiltroItensConcluidos] = useState<boolean>(false);
@@ -47,7 +47,7 @@ const Projeto: React.FC = () => {
 
                 <ModalFormularioProjeto item={projeto} />
 
-                <ModalOpcoes />
+                <ModalOpcoesProjeto />
 
             </IonContent>
         </IonPage>

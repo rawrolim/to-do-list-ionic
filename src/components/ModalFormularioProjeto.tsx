@@ -17,11 +17,11 @@ const ModalForularioProjeto: React.FC<ContainerProps> = ({ item }) => {
         }
     },[item])
 
-    const {save, setNome,nome, _id, setOpenModalFormulario,openModalFormulario} = useContext(ProjetoContext);
+    const {save,setId, setNome,nome, _id, setOpenModalFormulario,openModalFormulario} = useContext(ProjetoContext);
 
     return (
         <>
-            <IonFab slot={"fixed"} horizontal="end" vertical="bottom" onClick={() => { setOpenModalFormulario(true) }}>
+            <IonFab slot={"fixed"} horizontal="end" vertical="bottom" onClick={() => { setOpenModalFormulario(true); setId("") }}>
                 <IonFabButton>
                     <IonIcon icon={add} />
                 </IonFabButton>
@@ -32,9 +32,9 @@ const ModalForularioProjeto: React.FC<ContainerProps> = ({ item }) => {
                     <IonToolbar>
                         <IonTitle>
                             {item ?
-                                "Editar item"
+                                "Editar projeto"
                                 :
-                                "Criar item"
+                                "Criar projeto"
                             }
                         </IonTitle>
                         <IonButtons slot="end">

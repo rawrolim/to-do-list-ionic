@@ -2,7 +2,8 @@ import { IonBadge, IonIcon, IonItem, IonLabel, IonList } from "@ionic/react";
 import { Item } from "../@types/todo";
 import { chatbubble, hourglass } from "ionicons/icons";
 import { TodoContext } from "../contexts/todoContext";
-import { useContext } from "react";
+import { ProjetoContext } from "../contexts/projetoContext";
+import { useContext, useEffect } from "react";
 
 interface ContainerProps {
     item: Item
@@ -10,6 +11,11 @@ interface ContainerProps {
 
 const Lista: React.FC<ContainerProps> = ({ item }) => {
     const { itemApontando, setItemOpcoes, setOpenModalOpcoes } = useContext(TodoContext);
+    const { get, dados } = useContext(ProjetoContext);
+
+    useEffect(() => {
+        get();
+    }, [item])
 
     return (
         <>
@@ -18,6 +24,11 @@ const Lista: React.FC<ContainerProps> = ({ item }) => {
                     <IonLabel className="ion-text-wrap">
                         <div>{item.titulo}</div>
                         <div className="ion-float-end" style={{ display: 'flex' }}>
+                            <IonBadge color={"medium"} style={{ display: 'flex', marginRight: '5px' }}>
+                                <label style={{textTransform:'capitalize'}} className='ion-align-self-center'>
+                                    {dados.find(dado => dado._id === item.projetoId).nome}
+                                </label>
+                            </IonBadge>
 
                             {itemApontando && (itemApontando._id === item._id) &&
                                 <IonBadge color={"success"} style={{ display: 'flex', marginRight: '5px' }}>
